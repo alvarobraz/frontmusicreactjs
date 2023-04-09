@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getToken } from './auth';
+
 require('dotenv').config();
 
 const api = axios.create({
