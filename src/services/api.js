@@ -4,8 +4,7 @@ import { getToken } from './auth';
 // require('dotenv').config();
 
 const api = axios.create({
-    // baseURL: process.env.REACT_APP_API_URL,
-    baseURL: 'http://localhost:9000/',
+    baseURL: 'https://backmusicsdevelopment.vercel.app/',
 });
 
 api.interceptors.request.use(async (config) => {
