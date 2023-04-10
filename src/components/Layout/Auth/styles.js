@@ -6,19 +6,20 @@ export const Container = styled.main`
   width: 100%;
   height: 100vh;
   margin: 0;
-  padding: 0;
+  padding: 7rem 0 0 0;
   background: var(--background);
 
-  display: flex;
+  display: flex-start;
   align-items: center;
   justify-content: space-between;
+
 `;
 
 export const Content = styled.main`
   position: relative;
   max-width: 500px;
   height: auto;
-  margin: 5rem auto;
+  margin: 0rem auto;
   padding: 0rem 1rem 0rem 1rem;
   background: var(--background);
 
@@ -44,12 +45,16 @@ export const Content = styled.main`
   }
 
   .error_input {
-      border: 2px solid #bc4749 !important;
-    }
+    border: 2px solid #bc4749 !important;
+  }
 
+  .carregando {
+    width: 3rem;
+  }
   
 
   button {
+    position: relative;
     background-color: var(--backgroundHeader);
     color: white;
     padding: 14px 20px;

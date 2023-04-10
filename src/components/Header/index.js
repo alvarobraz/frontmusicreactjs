@@ -1,9 +1,20 @@
 import React from 'react';
 import logoPlay from '../../assets/images/playmuisc.png'
-import avatar from '../../assets/images/avatar.png'
+import avatar from '../../assets/images/sign-out.png'
 import { Container, Content } from './styles'
+import { decodeToken } from '../../services/auth'
 
-export default function Header() {
+export default function Header({
+  nameFilter, onUserInputChange
+}) {
+
+  const { user } = decodeToken();
+
+  async function logout() {
+    localStorage.clear();
+    setTimeout(function(){window.location.href = '/';}, 0);
+  };
+
   return (
     <Container>
       <Content>
@@ -12,24 +23,25 @@ export default function Header() {
         <form>
           <input
           name="name"
-          value=""
-          onChange={()=>{}}
+          value={nameFilter && nameFilter !== undefined ? nameFilter : ''}
+          onChange={onUserInputChange}
           autoComplete="off"
           placeholder="Busque sua música, por nome, categoria..."
           />
         </form>
         <div className='ButtonsCategorys'>
           <button>
-            Inscritos
-          </button>
-          <button>
             Músicas
           </button>
           <button>
             Categorias
           </button>
+          {user.role === 'admin' ? 
+          <button>
+            Usuários
+          </button>: ''}
         </div>
-        <img className='avatar' src={avatar} alt="play music"/>
+        <img onClick={()=>logout()} className='avatar' src={avatar} alt="play music"/>
         
       </Content>
     </Container>

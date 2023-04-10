@@ -1,13 +1,10 @@
 import React from 'react';
-import Home from "../../Home";
 import { Container } from "./styles";
-import Header from '../../Header/'
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   return (
     <Container>
-      <Header />
-      <Home />
+      {props.children }
     </Container>
   )
 }

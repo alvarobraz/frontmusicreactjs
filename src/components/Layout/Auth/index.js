@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Content } from "./styles";
 import api from '../../../services/api'
-// import logoPlay from '../../assets/images/playmuisc.png'
-// import { Home } from '../../Home/styles'
+import loading from '../../../assets/images/Loading_icon.gif'
+import { decodeToken } from '../../../services/auth';
+import swal from 'sweetalert';
 
 export default function Auth() {
 
@@ -91,16 +92,55 @@ export default function Auth() {
     }
     setLoadRegister(true);
     await api.post("/inscritos", user)
-     .then(response => {
+    .then(response => {
+      setUser({})
+      setToReveal(!toReveal)
       setLoadRegister(false);
-      alert('cadastrou')
-     }).catch(error => {
+      swal({ icon: "success", title: "Sucesso!", text: "cadastro efetuado com sucesso!" });
+    }).catch(error => {
       setLoadRegister(false);
     });
   }
 
-  function signIn(event) {
-    console.log(event)
+ async function signIn() {
+    if(
+      user?.email === '' || user?.email === undefined ||
+      user?.password === '' || user?.password === undefined
+    ) {  
+      if(user?.email === '' || user?.email === undefined) {
+        setLoadEmail(true)
+      }
+      if(user?.password === '' || user?.password === undefined) {
+        setLoadPassword(true)
+      }
+     return
+    }
+    setLoadRegister(true);
+    await api.post("/login", user)
+    .then(response => {
+      setUser({})
+      setLoadRegister(false);
+      if(response.data.token !== undefined) {
+        // console.log('response.data')
+        // console.log(response.data)
+        localStorage.setItem('@playmusics/token', response.data.token);
+        const decoded = decodeToken();
+
+        if (decoded.user.role === 'user') {
+          setTimeout(function(){window.location.href = '/home';}, 0)
+        }
+        if (decoded.user.role === 'admin') {
+          setTimeout(function(){window.location.href = '/home';}, 0)
+        }
+
+
+      }
+      swal({ icon: "success", title: "Sucesso!", text: "Login efetuado com sucesso!" });
+    }).catch(error => {
+      // console.log(error.response.data.error)
+      setLoadRegister(false);
+      swal({ icon: "error", title: "Erro!", text: error?.response?.data?.error });
+    });
   }
 
 
@@ -108,9 +148,16 @@ export default function Auth() {
   return (
     <Container>
       <Content>
-        {loadRegister ? '...carregando' :
+        {
+        loadRegister ? 
         <>
-        <label for="name"><b>Email</b></label>
+        <img src={loading} alt="Carregando" className='carregando'/>
+        </>
+        :
+        <>
+        {toReveal ? 
+        <>
+        <label for="name"><b>Nome</b></label>
         <input 
           type="text" 
           name="name" 
@@ -120,16 +167,17 @@ export default function Auth() {
           className={loadName ? "error_input" : ''}
           required 
           />
-          <label for="email"><b>Email</b></label>
-          <input 
-            type="text" 
-            name="email" 
-            placeholder="Seu e-mail" 
-            value={user?.email ? user.email : ''} 
-            onChange={myChangeHandlerToUser}
-            className={loadName ? "error_input" : ''}
-            required 
-            />
+        </>: ''}
+        <label for="email"><b>Email</b></label>
+        <input 
+          type="text" 
+          name="email" 
+          placeholder="Seu e-mail" 
+          value={user?.email ? user.email : ''} 
+          onChange={myChangeHandlerToUser}
+          className={loadEmail ? "error_input" : ''}
+          required 
+          />
         <label for="psw"><b>Senha</b></label>
         <input 
           type="password" 
