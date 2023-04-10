@@ -137,9 +137,9 @@ export default function Auth() {
       }
       swal({ icon: "success", title: "Sucesso!", text: "Login efetuado com sucesso!" });
     }).catch(error => {
-      // console.log(error.response.data.error)
+      console.log(error)
       setLoadRegister(false);
-      swal({ icon: "error", title: "Erro!", text: error?.response?.data?.error });
+      swal({ icon: "error", title: "Erro!", text: 'Não foi possível efetuar o login' });
     });
   }
 
