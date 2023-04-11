@@ -85,8 +85,8 @@ export const Content = styled.div`
   }
 
   .avatar {
-    position: relative;
-    left: 23%;
+    position: fixed;
+    right: 12%;
   
     img{
       top: 2%;

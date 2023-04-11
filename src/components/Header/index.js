@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logoPlay from '../../assets/images/playmuisc.png'
 import avatar from '../../assets/images/sign-out.png'
 import { Container, Content } from './styles'
@@ -15,6 +15,8 @@ export default function Header({
     setTimeout(function(){window.location.href = '/';}, 0);
   };
 
+  
+
   return (
     <Container>
       <Content>
@@ -30,12 +32,16 @@ export default function Header({
           />
         </form>
         <div className='ButtonsCategorys'>
+         {user.role === 'user' ? 
+          <>
           <button>
-            Músicas
+          Músicas
           </button>
           <button>
             Categorias
           </button>
+          </>
+         : ''}
           {user.role === 'admin' ? 
           <button>
             Usuários
