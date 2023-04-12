@@ -28,9 +28,25 @@ export const Content = styled.main`
 
     label {
       display: block;
+      font-size: 17px;
+      color: var(--darkPurple);
+      font-family: 'Roboto', sans-serif;
+      text-transform: uppercase;
+      padding: 0 0 0.2rem 0;
 
       input {
       display: inline;
+      width: 100%;
+      padding: 0 1.5rem;
+      height: 3rem;
+      border-radius: 0.25rem;
+      border: 1px solid #d7d7d7;
+      background: #e7e9ee;
+      margin-bottom: 0.3rem;
+
+      &::placeholder {
+        color: var(--darkPurple);
+      }
     }
   }
 
@@ -39,8 +55,16 @@ export const Content = styled.main`
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
+    padding: 0 1.5rem;
+    height: 3rem;
+    border-radius: 0.25rem;
+    border: 1px solid #d7d7d7;
+    background: #e7e9ee;
+    margin-bottom: 0.3rem;
+
+    &::placeholder {
+      color: var(--darkPurple);
+    }
     
   }
 
@@ -56,14 +80,15 @@ export const Content = styled.main`
   
 
   button {
-    position: relative;
-    background-color: var(--backgroundHeader);
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
     width: 100%;
+    padding: 0 1.5rem;
+    height: 3rem;
+    border-radius: 0.25rem;
+    background-color: var(--lightPurple);
+    color: #fff;
+    margin-top: 1rem;
+    font-size: 1rem;
+    border:none;
     transition: 1s;
     &:hover {
       opacity: 0.8;

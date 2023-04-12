@@ -206,8 +206,10 @@ export default function Auth() {
         <div class="container">
           { toReveal ? 
           <button onClick={()=>Reveal()} type="button" className="cancelbtn">Voltar</button> : 
-          <button type="button" className="cancelbtn">Cancelar</button> }
-          <span className="forgot">Recuperar <a href="/">senha?</a></span>
+          // <button type="button" className="cancelbtn">Cancelar</button> 
+          ''
+          }
+          {/* <span className="forgot">Recuperar <a href="/">senha?</a></span> */}
         </div>
         <div class="container">
           {toReveal ? '': <button onClick={()=>Reveal()} className="recover">Não possui um acesso, então cadastre-se?</button>}

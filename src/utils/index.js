@@ -23,3 +23,10 @@ export const dateMask = value => {
     .replace(/(\d{2})(\d)/, '$1/$2')
     .replace(/(\d{4})\d+?$/, '$1') // captura 4 numeros seguidos e não deixa ser digitado mais nada
 }
+
+export function espacoVirgula(str) {
+  console.log(str)
+  let lista = str[0].split(",");
+  let resultado = lista.join(", ");
+  return resultado;
+}

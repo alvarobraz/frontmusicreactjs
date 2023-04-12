@@ -12,10 +12,13 @@ import swal from 'sweetalert';
 import { 
   transformarEmArray, 
   trasformDateToDateFormatUTC, 
-  dateMask 
+  dateMask
 } from '../../utils'
+import { decodeToken } from '../../services/auth'
 
 export default function Home() {
+
+  const { user } = decodeToken();
 
   useEffect(() => {
     getMusics()
@@ -372,9 +375,6 @@ export default function Home() {
 
   }
 
-  console.log(musics)
-
-
   return (
       <>
       <Layout>
@@ -384,7 +384,7 @@ export default function Home() {
         />
         <ContainerHome>
           <HeaderCategory>
-            <Title>CATEGORIAS</Title>
+            {/* <Title>CATEGORIAS</Title> */}
             {
               loadcategory ?
               <img src={carregando} alt="Carregando"/> :
@@ -395,7 +395,12 @@ export default function Home() {
                   <ButtonCategory onClick={()=>getMusicsCategory(cat?._id)} key={i}>{cat?.name}</ButtonCategory>
                 ))
               }
-              <img onClick={handleOPenCategoryModalOpen} src={icon_mais} alt=""/>
+              {
+                user.role === 'admin' ?
+                <img onClick={handleOPenCategoryModalOpen} src={icon_mais} alt=""/>
+                :
+                ''
+              }
               </>
             }
             
@@ -414,11 +419,11 @@ export default function Home() {
                 title={play?.title}
                 author={play?.author}
                 categoryName={play?.category?.name}
-                // keyWords={play?.keyWords.map((k, i)=>(
-                //   play?.keyWords?.length-1 === i ?
-                //   k :
-                //   k+', '
-                // ))}
+                keyWords={play?.keyWords.map((k, i)=>(
+                  play?.keyWords?.length-1 === i ?
+                  k :
+                  k+', '
+                ))}
                 />
               ))
               :
@@ -567,9 +572,14 @@ export default function Home() {
                 </button>
               </FormModal>
             </Modal>
-            <ContentAdd>
-            <img onClick={()=>handleOPenMusicModalOpen()} src={icon_mais} alt=""/>
-            </ContentAdd>
+            {
+              user.role === 'admin' ?
+              <ContentAdd>
+              <img onClick={()=>handleOPenMusicModalOpen()} src={icon_mais} alt=""/>
+              </ContentAdd>
+              :
+              ''
+            }
           </Content>
 
           

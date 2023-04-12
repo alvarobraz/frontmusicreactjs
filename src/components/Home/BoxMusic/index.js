@@ -1,8 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
 import { Container, Content } from "./styles";
+import {
+  espacoVirgula 
+} from '../../../utils'
 
-export function BoxMusic({image, author, title, categoryName, id}) {
+export function BoxMusic({image, author, title, keyWords, categoryName, id}) {
   return (
     <NavLink to={`musicas/${id}`}>
       <Container>
@@ -16,6 +19,7 @@ export function BoxMusic({image, author, title, categoryName, id}) {
           :
           ''
         }
+        <p><i>{espacoVirgula(keyWords)}</i></p>
         </Content>
       </Container>
     </NavLink>
