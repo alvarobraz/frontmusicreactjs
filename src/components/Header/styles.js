@@ -100,7 +100,7 @@ export const Content = styled.div`
 
   .logout {
     position: relative;
-    right: -33.8%;
+    right: -41.8%;
     opacity: 0.5;
     cursor: pointer;
   

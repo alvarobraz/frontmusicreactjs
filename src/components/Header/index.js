@@ -40,10 +40,7 @@ export default function Header({
           </NavLink>
           </>
          : ''}
-          {user.role === 'admin' ? 
-          <NavLink to="/home">
-            Usuários
-          </NavLink>: ''}
+          
         </div>
         <img onClick={()=>logout()} className='logout' src={avatar} alt="play music"/>
         
