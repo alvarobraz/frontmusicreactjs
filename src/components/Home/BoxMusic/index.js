@@ -1,22 +1,23 @@
 import React from 'react';
-import { Container, Image, TitleMusic, KeyWords, Content } from "./styles";
-// import { NavLink } from 'react-router-dom'
-import ImgVegas from '../../../assets/images/musics/vegas.webp'
+import { NavLink } from 'react-router-dom'
+import { Container, Content } from "./styles";
 
-export function BoxMusic() {
+export function BoxMusic({image, author, title, categoryName, id}) {
   return (
-    <Container>
-     <Content>
-      <Image>
-        <img src={ImgVegas} alt=""/>
-      </Image>
-      <TitleMusic>
-        Vegas-Bae Bae (Invader Space RMX)
-      </TitleMusic>
-      <KeyWords>
-        Eletrônico, Trance, Vegas, Psy
-      </KeyWords>
-     </Content>
-    </Container>
+    <NavLink to={`musicas/${id}`}>
+      <Container>
+        <Content>
+        <img src={image} width="230px" alt=""/>
+        <h1>{author}</h1>
+        <p>{title}</p>
+        {
+          categoryName ?
+          <p className='span'>{categoryName}</p>
+          :
+          ''
+        }
+        </Content>
+      </Container>
+    </NavLink>
   )
 }

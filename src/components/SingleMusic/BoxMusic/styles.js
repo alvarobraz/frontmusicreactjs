@@ -1,13 +1,10 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  position: relative;
-  top: 0;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  min-height: 17rem;
 `
 
 export const Content = styled.button`
@@ -19,7 +16,6 @@ export const Content = styled.button`
   border: none;
   background: transparent;
   left: -4%;
-  top: -35px;
 
   &:hover {
     border: none;
@@ -38,7 +34,6 @@ export const Content = styled.button`
     text-transform: uppercase;
     margin-bottom: 0.7rem;
     text-align: left;
-    text-decoration: none;
   }
 
   p {

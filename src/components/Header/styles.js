@@ -63,30 +63,46 @@ export const Content = styled.div`
     left: 2%;
     height: 2rem;
     margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    button:first-child {
-      margin-left: 1rem
-    }
-
-    button {
-      margin: 0rem 0px 0px 0;
-      padding: 2px 20px;
+    a:first-child {
+      margin: 2rem 0rem 0rem 1rem;
+      padding: 23px 20px;
       background-color: var(--darkPurple);
-      height: 4rem;
       color: rgb(255, 255, 255);
       font-size: 12px;
-      border: medium none;
       transition: all 0.2s ease 0s;2s;
+      text-decoration: none;
       &:hover {
         background-color: var(--lightPurple);
         transition: 0.2s;
+        text-decoration: none;
+      }
+    }
+
+    a:nth-child(n+2) {
+      margin: 2rem 0px 0px;
+      padding: 23px 20px;
+      background-color: var(--darkPurple);
+      color: rgb(255, 255, 255);
+      font-size: 12px;
+      transition: all 0.2s ease 0s;2s;
+      text-decoration: none;
+      &:hover {
+        background-color: var(--lightPurple);
+        transition: 0.2s;
+        text-decoration: none;
       }
     }
   }
 
-  .avatar {
+  .logout {
     position: relative;
-    left: 23%;
+    right: -33.8%;
+    opacity: 0.5;
+    cursor: pointer;
   
     img{
       top: 2%;
