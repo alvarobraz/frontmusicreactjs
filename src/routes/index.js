@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import LoginOrRegister from '../components/Layout/Auth/index'
 import Home from '../components/Home/'
+import SingleMusic from '../components/SingleMusic/'
 
 import { isAuthenticated } from '../services/auth';
 
@@ -55,6 +56,7 @@ const Routes = () => (
       <Route exact path="/" component={LoginOrRegister} />
       {/* <AdminRoute exact path="/home" component={Home} /> */}
       <PrivateRoute exact path="/home" component={Home} />
+      <PrivateRoute exact path="/musicas/:id" component={SingleMusic} />
     </Switch>
   </BrowserRouter>
 )

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom'
 import logoPlay from '../../assets/images/playmuisc.png'
 import avatar from '../../assets/images/sign-out.png'
 import { Container, Content } from './styles'
@@ -32,22 +33,19 @@ export default function Header({
           />
         </form>
         <div className='ButtonsCategorys'>
-         {user.role === 'user' ? 
+         {user.role === 'user' || user.role === 'admin' ? 
           <>
-          <button>
+          <NavLink to="/home">
           Músicas
-          </button>
-          <button>
-            Categorias
-          </button>
+          </NavLink>
           </>
          : ''}
           {user.role === 'admin' ? 
-          <button>
+          <NavLink to="/home">
             Usuários
-          </button>: ''}
+          </NavLink>: ''}
         </div>
-        <img onClick={()=>logout()} className='avatar' src={avatar} alt="play music"/>
+        <img onClick={()=>logout()} className='logout' src={avatar} alt="play music"/>
         
       </Content>
     </Container>

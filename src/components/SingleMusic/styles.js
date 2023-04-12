@@ -11,49 +11,55 @@ export const ContainerHome = styled.div`
 `;
 
 export const Content = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
   position: relative;
-  align-items: center;
-
-  
+  align-items: top;
   left: 0rem;
+  
   .carregamento {
     position: relative;
     width: 100%;
     margin: 0px auto;
     padding: 5rem 0 0 32rem;
     text-align: center;
-    grid-column-start: 1;
-    grid-column-end: 3;
     img{
       width: 3rem;
     }
   }
 
-  
-  
-`
+  /* div {
+    /* width: 100%; */
+    /* background-color: #ccc; */
+    padding: 0rem 4rem 1rem 1rem;
 
-export const ContentAdd = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  position: relative;
-  align-items: center;
-  width: 40%;
-  margin: 0 auto;
+    
+    
+    
+  } 
 
-  img {
-    position: relative;
-    /* z-index: 99999; */
-    width: 100%;
-    margin: 0px auto;
-    padding: 0rem;
-    text-align: center;
-    height: 4rem;
-    opacity: 0.6;
-    cursor: pointer;
+  .elemento-60 {
+    width: 60%;
+    min-height: 25rem;
+    vertical-align: top;
+    p {
+      padding: 0 3.7rem 2rem 0;
+      text-align: left;
+      line-height: 1.7rem;
+    }
   }
+
+  .elemento-40 {
+    top: -4.5rem;
+    width: 40%;
+    min-height: 25rem
+    vertical-align: top;
+    iframe {
+      width: 28rem;
+      height: 17rem;
+    }
+  }
+  
 `
 
 export const HeaderCategory = styled.div`
@@ -87,11 +93,23 @@ export const HeaderCategory = styled.div`
 `
 
 export const Title = styled.h1`
-  font-size: 17px;
+  font-size: 27px;
   color: var(--darkPurple);
   font-family: 'Roboto', sans-serif;
   margin: 0.4rem 1rem 0 0;
+  
+  span {
+    display: block;
+    font-size: 20px;
+  }
 `;
+
+// export const Author = styled.h2`
+//   font-size: 20px;
+//   color: var(--darkPurple);
+//   font-family: 'Roboto', sans-serif;
+//   margin: 0.4rem 1rem 0 0;
+// `;
 
 export const ButtonCategory = styled.button`
   width: auto;
@@ -110,6 +128,10 @@ export const ButtonCategory = styled.button`
   }
 `;
 
+
+
+/**/
+
 export const FormModal = styled.div`
 
   h1 {
@@ -119,19 +141,6 @@ export const FormModal = styled.div`
     text-transform: uppercase;
     padding: 0 0 1rem 0;
   }
-  textarea {
-    width: 100%;
-    padding: 0 1.5rem;
-    height: 5rem;
-    border-radius: 0.25rem;
-    border: 1px solid #d7d7d7;
-    background: #e7e9ee;
-    margin-bottom: 0.3rem;
-
-    &::placeholder {
-      color: var(--darkPurple);
-    }
-  }
   input {
     width: 100%;
     padding: 0 1.5rem;
@@ -139,7 +148,6 @@ export const FormModal = styled.div`
     border-radius: 0.25rem;
     border: 1px solid #d7d7d7;
     background: #e7e9ee;
-    margin-bottom: 0.3rem;
 
     &::placeholder {
       color: var(--darkPurple);

@@ -34,7 +34,6 @@ export const Content = styled.button`
     text-transform: uppercase;
     margin-bottom: 0.7rem;
     text-align: left;
-    text-decoration: none;
   }
 
   p {

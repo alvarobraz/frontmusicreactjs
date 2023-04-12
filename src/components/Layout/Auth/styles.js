@@ -49,7 +49,9 @@ export const Content = styled.main`
   }
 
   .carregando {
+    position: relative;
     width: 3rem;
+    margin:  0 10rem;
   }
   
 
