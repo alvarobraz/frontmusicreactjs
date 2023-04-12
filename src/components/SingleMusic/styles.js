@@ -42,10 +42,13 @@ export const Content = styled.div`
     width: 60%;
     min-height: 25rem;
     vertical-align: top;
+    padding: 0;
     p {
-      padding: 0 3.7rem 2rem 0;
+      padding: 0 3.7rem 1rem 0;
       text-align: left;
       line-height: 1.7rem;
+      position: relative;
+      top: -27px;
     }
   }
 
@@ -79,7 +82,6 @@ export const HeaderCategory = styled.div`
     }
 
   }
-  
 
   img {
     position:relative;
@@ -101,6 +103,7 @@ export const Title = styled.h1`
   span {
     display: block;
     font-size: 20px;
+    color: var(--lightPurple)
   }
 `;
 

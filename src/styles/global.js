@@ -66,8 +66,10 @@ export const GlobalStyle = createGlobalStyle`
   .react-modal-content {
     width: 100%;
     max-width: 576px;
+    max-height: 500px;
+    overflow-y: auto;
     background: #fbfbfb;
-    padding: 3rem;
+    padding: 2rem;
     position: relative;
     border-radius: 0.25rem;
   }

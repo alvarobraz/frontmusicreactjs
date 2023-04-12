@@ -36,21 +36,24 @@ export const Content = styled.div`
 `
 
 export const ContentAdd = styled.div`
+  top: 12rem;
   display: grid;
   grid-template-columns: 1fr;
   position: relative;
+  -moz-box-align: center;
   align-items: center;
-  width: 40%;
-  margin: 0 auto;
+  width: 13%;
+  margin: 0px 29.8rem;
+  position: absolute;
 
   img {
     position: relative;
-    /* z-index: 99999; */
+    /* top: -337px; */
     width: 100%;
     margin: 0px auto;
     padding: 0rem;
     text-align: center;
-    height: 4rem;
+    height: 2rem;
     opacity: 0.6;
     cursor: pointer;
   }
@@ -83,6 +86,7 @@ export const HeaderCategory = styled.div`
     text-align: right;
     right: 0px;
     cursor: pointer;
+    opacity: 0.6
   }
 `
 
@@ -149,6 +153,26 @@ export const FormModal = styled.div`
 
   .error_input {
     border: 2px solid #bc4749 !important;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  select {
+    width: 100%;
+    padding: 0 1.5rem;
+    height: 3rem;
+    border-radius: 0.25rem;
+    border: 1px solid #d7d7d7;
+    background: #e7e9ee;
+    margin-bottom: 0.3rem;
+  }
+
+  select:focus {
+    outline: none;
+    /* box-shadow: 0 0 5px #7fad39; */
   }
 
   button {

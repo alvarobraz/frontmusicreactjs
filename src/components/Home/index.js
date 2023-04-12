@@ -2,12 +2,18 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../Layout/Dashboard'
 import Header from '../Header'
 import { BoxMusic } from "./BoxMusic";
-import ImgVegas from '../../assets/images/musics/vegas.webp'
+// import ImgVegas from '../../assets/images/musics/vegas.webp'
 import api from '../../services/api'
 import { ContainerHome, Content, ContentAdd, HeaderCategory, Title, ButtonCategory, FormModal, Boxcategory } from "./styles";
 import carregando from '../../assets/images/Loading_icon.gif'
 import icon_mais from '../../assets/images/icon_mais.svg'
 import Modal from 'react-modal'
+import swal from 'sweetalert';
+import { 
+  transformarEmArray, 
+  trasformDateToDateFormatUTC, 
+  dateMask 
+} from '../../utils'
 
 export default function Home() {
 
@@ -84,7 +90,7 @@ export default function Home() {
       setLoadMusic(true)
       await api.get(`/musicas/?category=${e}&page=0&limit=10&status=active`)
       .then(response => {
-        // console.log(response?.data?.musicsSearch)
+        console.log(response?.data?.musicsSearch)
         setLoadMusic(false)
         setMusics(response?.data?.musicsSearch);
       }).catch(error => {
@@ -152,6 +158,7 @@ export default function Home() {
     await api.put(`categorias/${_id}`, {status: 'active'})
     .then(response => {
       setCategory({})
+      // getMusics()
       setLoadcategoriesModal(false);
       getCategoriesModal()
       getCategories()
@@ -169,6 +176,7 @@ export default function Home() {
     await api.delete(`categorias/${_id}`)
     .then(response => {
       setCategory({})
+      // getMusics()
       setLoadcategoriesModal(false);
       getCategoriesModal()
       getCategories()
@@ -210,6 +218,7 @@ export default function Home() {
   const [ loadDescription, setLoadDescription ] = useState(false);
   const [ loadImg, setLoadImg ] = useState(false);
   const [ loadKeywords, setLoadKeywords ] = useState(false);
+  const [ loadCategory, setLoadCategory ] = useState(false);
   const [ loadReleaseDateOf, setReleaseDateOf ] = useState(false);
 
   async function myChangeHandlerToMusic(event) {
@@ -270,21 +279,40 @@ export default function Home() {
     if(nam === 'keyWords') {
       if(val.length !== 0) {
         setLoadKeywords(false)
-        setMusic({ ...music, [nam]: val })
+        let key = transformarEmArray(val)
+        setMusic({ ...music, [nam]: key })
       }
       else {
         setLoadKeywords(true)
         setMusic({ ...music, [nam]: val })
       }
     }
-    if(nam === 'releaseDateOf') {
+    if(nam === 'category') {
       if(val.length !== 0) {
-        setReleaseDateOf(false)
+        setLoadCategory(false)
         setMusic({ ...music, [nam]: val })
       }
       else {
-        setReleaseDateOf(true)
+        setLoadCategory(true)
         setMusic({ ...music, [nam]: val })
+      }
+    }
+    if(nam === 'releaseDateOf') {
+      if(val.length !== 0) {
+        let dateNormal = dateMask(val)
+        setMusic({ ...music,  dateNormal })
+        if(val.length === 10) {
+          setReleaseDateOf(false)
+          let releaseDateOf = trasformDateToDateFormatUTC(val)
+          let dateNormal = dateMask(val)
+          // releaseDateOf = new Date(releaseDateOf)
+          setMusic({ ...music,  dateNormal, releaseDateOf })
+        }
+      }
+      else {
+        setReleaseDateOf(true)
+        let dateNormal = dateMask(val)
+        setMusic({ ...music, dateNormal })
       }
     }
     
@@ -292,13 +320,17 @@ export default function Home() {
   }
 
   async function registerMusic() {
+
+    // console.log(music)
     if(
       music?.title === '' || music?.title === undefined || 
       music?.author === '' || music?.author === undefined ||
       music?.url === '' || music?.url === undefined ||
       music?.descrition === '' || music?.descrition === undefined ||
       music?.img === '' || music?.img === undefined ||
-      music?.keyWords === '' || music?.keyWords === undefined 
+      music?.keyWords === '' || music?.keyWords === undefined ||
+      music?.category === '' || music?.category === undefined ||
+      music?.releaseDateOf === '' || music?.releaseDateOf === undefined
     ) {  
       if(music?.title === '' || music?.title === undefined) {
         setLoadTitle(true)
@@ -318,22 +350,29 @@ export default function Home() {
       if(music?.keyWords === '' || music?.keyWords === undefined) {
         setLoadKeywords(true)
       }
+      if(music?.category === '' || music?.category === undefined) {
+        setLoadCategory(true)
+      }
+      if(music?.releaseDateOf === '' || music?.releaseDateOf === undefined) {
+        setReleaseDateOf(true)
+      }
      return
     }
-    setLoadMusicReg(true);
+    setLoadMusic(true);
     await api.post('musicas', music)
     .then(response => {
       setMusic({})
-      setLoadMusicReg(false);
+      setLoadMusic(false);
       getMusics()
-      // setCategoriesModalOpen(false)
-      // swal({ icon: "success", title: "Sucesso!", text: "cadastro efetuado com sucesso!" });
+      setMusicsModalOpen(false)
     }).catch(error => {
-      setLoadMusicReg(false);
+      setLoadMusic(false);
+      swal({ icon: "error", title: "Algo deu errado!", text: error.response.data.error });
     });
 
   }
 
+  console.log(musics)
 
 
   return (
@@ -366,20 +405,24 @@ export default function Home() {
               loadMusic ?
               <div className='carregamento'><img src={carregando} alt="Carregando"/></div>
               :
+              musics && musics.length !== 0 ?
               musics.map((play, index) => (
                 <BoxMusic
                 key={index}
                 id={play?._id}
-                image={ImgVegas}
+                image={play?.img}
                 title={play?.title}
                 author={play?.author}
-                keyWords={play?.keyWords.map((k, i)=>(
-                  play?.keyWords?.length-1 === i ?
-                  k :
-                  k+', '
-                ))}
+                categoryName={play?.category?.name}
+                // keyWords={play?.keyWords.map((k, i)=>(
+                //   play?.keyWords?.length-1 === i ?
+                //   k :
+                //   k+', '
+                // ))}
                 />
               ))
+              :
+              'Nenhuma música cadastrada até o momento!'
             }
             
             <Modal 
@@ -498,60 +541,38 @@ export default function Home() {
                 onChange={myChangeHandlerToMusic}
                 className={loadKeywords ? "error_input" : ''}
                  />
+                  <select id="category" name="category" onChange={myChangeHandlerToMusic}>
+                  <option value="">Selecione uma categoria</option>
+                    {
+                      categories ? categories.map((cat, i) => (
+                        <option key={i} value={cat._id}>{cat.name}</option>
+                      ))
+                      :
+                      'Nenhuma categoria cadastrada!'
+                    }
+                  </select>
                  <input
                 type="text"
                 placeholder='Data de lançamento'
                 name='releaseDateOf'
-                value={music?.releaseDateOf ? music?.releaseDateOf : ''}
+                value={music?.dateNormal ? music?.dateNormal : ''}
                 onChange={myChangeHandlerToMusic}
                 className={loadReleaseDateOf ? "error_input" : ''}
                  />
                 <button onClick={()=>registerMusic()}>
-                  {loadcategoriesModal ?
+                  {loadMusic ?
                   <img src={carregando} alt="Carregando"/>
                   : 
                   'Cadastrar'}
                 </button>
               </FormModal>
-              <Boxcategory>
-                {
-                  loadcategoriesModal ?
-                  <img src={carregando} alt="Carregando"/>
-                  :
-                  categoriesModal?.map((catModal, index) => (
-                    <>
-                    <div key={index}>
-                      <p>{catModal?.name}</p>
-                      <button 
-                      onClick={catModal?.status === 'active' ? ()=>inactive(catModal?._id) : ()=>active(catModal?._id)}
-                      className={catModal?.status === 'active' ? 'red' : 'green'}
-                      >
-                      {catModal?.status === 'active' ? 'desativar' : 'Ativar'}
-                      </button>
-                    </div>
-                    </>
-                  ))
-                }
-                
-                {/* <div>
-                  <p>asas</p>
-                  <button className="red">
-                    desativar
-                  </button>
-                </div>
-                <div>
-                  <p>asas</p>
-                  <button className="yellow">
-                    editar
-                  </button>
-                </div> */}
-              </Boxcategory>
             </Modal>
+            <ContentAdd>
+            <img onClick={()=>handleOPenMusicModalOpen()} src={icon_mais} alt=""/>
+            </ContentAdd>
           </Content>
 
-          <ContentAdd>
-            <img onClick={()=>handleOPenMusicModalOpen()} src={icon_mais} alt=""/>
-          </ContentAdd>
+          
         </ContainerHome>
       </Layout>
       </>

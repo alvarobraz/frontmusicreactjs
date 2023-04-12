@@ -4,7 +4,7 @@ import { getToken } from './auth';
 // require('dotenv').config();
 
 const api = axios.create({
-    baseURL: 'https://backmusicsdevelopment.vercel.app/',
+    baseURL: 'https://backmusicsdevelopment.vercel.app/'
 });
 
 api.interceptors.request.use(async (config) => {
